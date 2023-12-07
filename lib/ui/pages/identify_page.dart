@@ -34,7 +34,8 @@ class _IdentifyPageState extends State<IdentifyPage> {
       hasLoaded = false;
     });
     var tempStore = await ImagePicker().pickImage(
-        source: imgsrc == 'camera' ? ImageSource.camera : ImageSource.gallery);
+      source: imgsrc == 'camera' ? ImageSource.camera : ImageSource.gallery,
+    );
 
     setState(() {
       pickedImage = File(tempStore!.path);
@@ -89,6 +90,7 @@ class _IdentifyPageState extends State<IdentifyPage> {
           isScrollControlled: true,
           context: context,
           builder: (context) {
+            final Size size = MediaQuery.of(context).size;
             return SizedBox(
               height: 650,
               child: SingleChildScrollView(
@@ -103,7 +105,7 @@ class _IdentifyPageState extends State<IdentifyPage> {
                         child: IconButton(
                             onPressed: () {
                               Navigator.pop(context);
-                              getImageCamera('camera');
+                              getImageCamera('gallery');
                             },
                             icon: const Icon(Icons.close)),
                       ),
@@ -112,8 +114,8 @@ class _IdentifyPageState extends State<IdentifyPage> {
                       ),
                       Center(
                         child: Container(
-                          height: 300,
-                          width: 300,
+                          height: size.height * 0.4,
+                          width: size.width,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(works[i]['artworkImage']),
@@ -199,7 +201,7 @@ class _IdentifyPageState extends State<IdentifyPage> {
     super.initState();
 
     loadmodel();
-    getImageCamera('camera');
+    getImageCamera('gallery');
   }
 
   @override
